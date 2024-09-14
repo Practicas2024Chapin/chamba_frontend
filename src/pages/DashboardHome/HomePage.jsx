@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/navbar/Navbar';
+import CardViewJobAp from '../../components/cardsJob/CardViewJobAp';
 
 const HomePage = () => {
     const navigate = useNavigate(); // Hook para redirigir
@@ -12,42 +13,30 @@ const HomePage = () => {
     return (
         <>
             <Navbar />
-            <div className="text-black bg-gray-100 w-full h-[100vh] flex items-center justify-center">
-                {/* Card para Post a Job Offer */}
-                <div className="bg-white w-[28rem] p-8 rounded-lg shadow-lg">
-                    {/* Título de la sección */}
-                    <h1 className="text-2xl font-semibold mb-6 text-center">Post a Job offer</h1>
-
-                    {/* Input para categoría de trabajo */}
-                    <input
-                        type="text"
-                        placeholder="Job category"
-                        className="w-full mb-4 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-400 rounded-full focus:outline-none focus:border-black hover:bg-gray-100 transition-all"
+            <section>
+                <div className="relative w-full h-[20rem]">
+                    <img
+                        className="absolute h-full w-full object-cover object-center"
+                        src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt="nature"
                     />
-
-                    {/* Input para ubicación */}
-                    <input
-                        type="text"
-                        placeholder="Location"
-                        className="w-full mb-4 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-400 rounded-full focus:outline-none focus:border-black hover:bg-gray-100 transition-all"
-                    />
-
-                    {/* Input para correo electrónico */}
-                    <input
-                        type="email"
-                        placeholder="email"
-                        className="w-full mb-6 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-400 rounded-full focus:outline-none focus:border-black hover:bg-gray-100 transition-all"
-                    />
-
-                    {/* Botón de publish */}
-                    <button
-                        onClick={handlePublishClick} // Redirige al hacer clic
-                        className="w-full px-6 py-2 text-sm font-semibold text-white bg-black rounded-full hover:bg-gray-900 transition-all"
-                    >
-                        Publish
-                    </button>
+                    <div className="absolute inset-0 h-full w-full bg-black/50"></div>
+                    <div className="relative pt-28 text-center">
+                        <h2 className="block antialiased tracking-normal font-sans font-semibold leading-[1.3] text-white mb-4 text-3xl lg:text-4xl">
+                            ¡EMPLEOS DISPONIBLES!
+                        </h2>
+                        <p className="block antialiased font-sans text-xl font-normal leading-relaxed text-white mb-9 opacity-70">
+                            ¿Estas en busca de una oportunidad laboral? Llegaste al lugar indicado en nuestra web
+                        </p>
+                    </div>
                 </div>
-            </div>
+
+                <div className=" w-[100%] flex justify-center rounded-xl border border-white bg-white shadow-md shadow-black/5 saturate-200">
+                    <div className="my-8 gap-[3rem] mx-[8rem] flex">
+                        <CardViewJobAp />
+                    </div>
+                </div>
+            </section>
         </>
     );
 };
