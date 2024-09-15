@@ -26,7 +26,7 @@ const HomePage = () => {
                             ¡EMPLEOS DISPONIBLES!
                         </h2>
                         <p className="block antialiased font-sans text-xl font-normal leading-relaxed text-white mb-9 opacity-70">
-                            ¿Estas en busca de una oportunidad laboral? Llegaste al lugar indicado en nuestra web
+                        ¿Estás buscando una oportunidad laboral? ¡Has llegado al lugar indicado!
                         </p>
                     </div>
                 </div>

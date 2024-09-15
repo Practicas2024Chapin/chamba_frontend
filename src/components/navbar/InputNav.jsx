@@ -11,7 +11,7 @@ const InputNav = () => {
                             role="textbox"
                             contentEditable={false}
                         >
-                            REGISTER AS A WORKER
+                            REGISTRARME COMO TRABAJADOR
                         </div>
                     </div>
                 </div>
@@ -25,7 +25,7 @@ const InputNav = () => {
                             role="textbox"
                             contentEditable={false}
                         >
-                            REGISTER AS A COMPANY
+                           REGISTRARME COMO EMPRESA
                         </div>
                     </div>
                 </div>
