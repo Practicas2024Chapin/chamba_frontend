@@ -26,13 +26,13 @@ const HomePage = () => {
                             ¡EMPLEOS DISPONIBLES!
                         </h2>
                         <p className="block antialiased font-sans text-xl font-normal leading-relaxed text-white mb-9 opacity-70">
-                        ¿Estás buscando una oportunidad laboral? ¡Has llegado al lugar indicado!
+                            ¿Estás buscando una oportunidad laboral? ¡Has llegado al lugar indicado!
                         </p>
                     </div>
                 </div>
 
-                <div className=" w-[100%] flex justify-center rounded-xl border border-white bg-white shadow-md shadow-black/5 saturate-200">
-                    <div className="my-8 gap-[3rem] mx-[8rem] flex">
+                <div className="w-full flex justify-center rounded-xl border border-white bg-white shadow-md shadow-black/5 saturate-200">
+                    <div className="my-8 mx-[3rem] w-full max-w-screen-xl">
                         <CardViewJobAp />
                     </div>
                 </div>
