@@ -13,7 +13,7 @@ const RegisterPage = () => {
                     <div className="absolute inset-0 h-full w-full bg-black/50"></div>
                     <div className="relative pt-28 text-center">
                         <h2 className="block antialiased tracking-normal font-sans font-semibold leading-[1.3] text-white mb-4 text-3xl lg:text-4xl">
-                            ¡REGISTRA TU CUENTA!
+                            ¡CREA TU CUENTA!
                         </h2>
                         <p className="block antialiased font-sans text-xl font-normal leading-relaxed text-white mb-9 opacity-70">
                             Ingresa tus credenciales para crear a tu cuenta.

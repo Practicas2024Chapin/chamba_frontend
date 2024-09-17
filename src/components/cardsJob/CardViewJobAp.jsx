@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { getMyPost } from '../../service/PostGetMyPost';
+import { useNavigate } from 'react-router-dom';
 
 function CardViewJobAp() {
     const [myPost, setMyPost] = useState([]);
+    const navigate = useNavigate(); // Hook para navegar entre rutas
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -19,13 +21,14 @@ function CardViewJobAp() {
     }, []);
 
     const handleApplyNow = () => {
-        console.log('Apply Now button clicked');
+        // Redirige al usuario a la página de registro
+        navigate('/register'); // Cambia '/register' por la ruta que hayas definido para el registro
     };
 
     return (
         <div className="p-auto">
             {myPost.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3  gap-x-[6rem]  gap-y-[3rem] mx-[auto]">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-x-[6rem] gap-y-[3rem] mx-[auto]">
                     {myPost.map((element, index) => (
                         <div key={index} className="bg-white p-4 rounded-lg shadow-lg transition-transform transform hover:scale-105">
                             <h2 className="text-xl font-semibold mb-2 text-gray-900">{element.post}</h2>
@@ -46,7 +49,7 @@ function CardViewJobAp() {
                                 onClick={handleApplyNow}
                                 className="w-full px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-full hover:bg-blue-700 transition-all"
                             >
-                                Aplicar a empleo
+                                Aplicar al empleo
                             </button>
                         </div>
                     ))}
@@ -59,3 +62,4 @@ function CardViewJobAp() {
 }
 
 export default CardViewJobAp;
+
