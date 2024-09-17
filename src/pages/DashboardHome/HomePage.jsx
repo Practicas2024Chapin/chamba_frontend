@@ -1,13 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/navbar/Navbar';
 import CardViewJobAp from '../../components/cardsJob/CardViewJobAp';
 
 const HomePage = () => {
-    const navigate = useNavigate(); // Hook para redirigir
+    const navigate = useNavigate();
+    
+    // Estados para almacenar los datos del formulario
+    const [company, setCompany] = useState('');
+    const [category, setCategory] = useState('');
+    const [location, setLocation] = useState(''); // Estado para Location
 
-    const handlePublishClick = () => {
-        navigate('/register'); // Redirige a la página de registro
+    // Manejar el envío del formulario
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Redirigir a /register con los datos
+        navigate('/register', {
+            state: {
+                company,
+                category,
+                location, // Incluyendo location en los datos que se envían
+            },
+        });
     };
 
     return (
@@ -36,11 +50,76 @@ const HomePage = () => {
                         <CardViewJobAp />
                     </div>
                 </div>
+
+                {/* Card similar a las publicaciones de empleo, pero contiene el formulario */}
+                <div className="w-full flex justify-center mt-8">
+                    <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">Publicar un trabajo</h2>
+                        <form className="space-y-4" onSubmit={handleSubmit}>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700" htmlFor="company">
+                                    Compañía
+                                </label>
+                                <input
+                                    id="company"
+                                    type="text"
+                                    value={company}
+                                    onChange={(e) => setCompany(e.target.value)}
+                                    placeholder="Nombre de la compañía"
+                                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-700 focus:border-gray-700 sm:text-sm"
+                                    required
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700" htmlFor="location">
+                                    Location
+                                </label>
+                                <input
+                                    id="location"
+                                    type="text"
+                                    value={location}
+                                    onChange={(e) => setLocation(e.target.value)}
+                                    placeholder="Ubicación"
+                                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-700 focus:border-gray-700 sm:text-sm"
+                                    required
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700" htmlFor="category">
+                                    Categoría
+                                </label>
+                                <input
+                                    id="category"
+                                    type="text"
+                                    value={category}
+                                    onChange={(e) => setCategory(e.target.value)}
+                                    placeholder="Categoría del trabajo"
+                                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-700 focus:border-gray-700 sm:text-sm"
+                                    required
+                                />
+                            </div>
+
+                            <div>
+                                <button
+                                    type="submit"
+                                    className="w-full px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-full hover:bg-blue-700 transition-all"
+                                >
+                                    Publicar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </section>
         </>
     );
 };
 
 export default HomePage;
+
+
+
 
 

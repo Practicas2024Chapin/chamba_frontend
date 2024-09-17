@@ -1,6 +1,43 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-const LoginPage = () => {
+function LoginPage() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('http://127.0.0.1:3000/practica/v1/auth/login', {
+                email,
+                password,
+            });
+
+            const token = response.data.userDetails.token;
+            const role = response.data.userDetails.role;
+            console.log('Inicio de sesión exitoso:', response.data);
+
+            localStorage.setItem('token', token);
+
+            // Redirigir según el tipo de usuario
+            if (role === 'COMPANY_ROLE') {
+                navigate('/company');
+            } else {
+                navigate('/user');
+            }
+        } catch (err) {
+            // Mostrar un mensaje de error en caso de credenciales incorrectas o fallo del servidor
+            if (err.response && err.response.status === 400) {
+                setError('Credenciales incorrectas o el usuario no existe.');
+            } else {
+                setError('Error al iniciar sesión. Inténtalo más tarde.');
+            }
+        }
+    };
+
     return (
         <>
             <section>
@@ -24,7 +61,7 @@ const LoginPage = () => {
                 <div className="w-full flex justify-center">
                     <div className="my-8 mx-[3rem] w-full max-w-screen-sm">
                         <div className="mx-auto max-w-md rounded-xl border border-gray-200 bg-white shadow-md shadow-black/5 p-8">
-                            <form className="space-y-6">
+                            <form className="space-y-6" onSubmit={handleLogin}>
                                 <div>
                                     <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                                         Correo Electrónico
@@ -33,6 +70,8 @@ const LoginPage = () => {
                                         id="email"
                                         name="email"
                                         type="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
                                         required
                                         className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black sm:text-sm"
                                         placeholder="correo@ejemplo.com"
@@ -46,11 +85,18 @@ const LoginPage = () => {
                                         id="password"
                                         name="password"
                                         type="password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
                                         required
                                         className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black sm:text-sm"
                                         placeholder="********"
                                     />
                                 </div>
+                                {error && (
+                                    <div className="text-red-500 text-sm">
+                                        {error}
+                                    </div>
+                                )}
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center">
                                         <input
@@ -84,8 +130,10 @@ const LoginPage = () => {
             </section>
         </>
     );
-};
+}
 
 export default LoginPage;
+
+
 
 
