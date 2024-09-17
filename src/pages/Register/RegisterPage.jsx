@@ -1,6 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-const RegisterPage = () => {
+function RegisterPage() {
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
+
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('http://127.0.0.1:3000/practica/v1/auth/register', {
+                username,
+                email,
+                password,
+            });
+
+            console.log('Registro completado:', response.data);
+            // Redirigir al usuario a la página de inicio de sesión
+            navigate('/login');
+        } catch (err) {
+            // Si hay errores de validación, mostrarlos
+            if (err.response && err.response.data && err.response.data.errors) {
+                // Si `err.response.data.errors` es un array, únelos en una cadena
+                const errorMessages = err.response.data.errors.map((error) => error.msg).join(', ');
+                setError(errorMessages);
+            } else {
+                // Mostrar un mensaje de error genérico si no hay errores detallados
+                setError('Error al registrar');
+            }
+        }
+    };
+
     return (
         <>
             <section>
@@ -16,7 +49,7 @@ const RegisterPage = () => {
                             ¡CREA TU CUENTA!
                         </h2>
                         <p className="block antialiased font-sans text-xl font-normal leading-relaxed text-white mb-9 opacity-70">
-                            Ingresa tus credenciales para crear a tu cuenta.
+                            Ingresa tus credenciales para crear tu cuenta.
                         </p>
                     </div>
                 </div>
@@ -24,7 +57,7 @@ const RegisterPage = () => {
                 <div className="w-full flex justify-center">
                     <div className="my-8 mx-[3rem] w-full max-w-screen-sm">
                         <div className="mx-auto max-w-md rounded-xl border border-gray-200 bg-white shadow-md shadow-black/5 p-8">
-                            <form className="space-y-6">
+                            <form className="space-y-6" onSubmit={handleRegister}>
                                 <div>
                                     <label htmlFor="username" className="block text-sm font-medium text-gray-700">
                                         Nombre de Usuario
@@ -33,6 +66,8 @@ const RegisterPage = () => {
                                         id="username"
                                         name="username"
                                         type="text"
+                                        value={username}
+                                        onChange={(e) => setUsername(e.target.value)}
                                         required
                                         className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black sm:text-sm"
                                         placeholder="username"
@@ -46,6 +81,8 @@ const RegisterPage = () => {
                                         id="email"
                                         name="email"
                                         type="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
                                         required
                                         className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black sm:text-sm"
                                         placeholder="correo@ejemplo.com"
@@ -59,11 +96,18 @@ const RegisterPage = () => {
                                         id="password"
                                         name="password"
                                         type="password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
                                         required
                                         className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black sm:text-sm"
                                         placeholder="********"
                                     />
                                 </div>
+                                {error && (
+                                    <div className="text-red-500 text-sm">
+                                        {error}
+                                    </div>
+                                )}
                                 <div>
                                     <button
                                         type="submit"
@@ -79,6 +123,6 @@ const RegisterPage = () => {
             </section>
         </>
     );
-};
+}
 
 export default RegisterPage;
