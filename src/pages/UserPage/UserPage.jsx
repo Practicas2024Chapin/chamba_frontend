@@ -1,18 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/navbar/Navbar';
 import CardViewJobAp from '../../components/cardsJob/CardViewJobAp';
 
-const HomePage = () => {
-    const navigate = useNavigate(); // Hook para redirigir
-
-    const handlePublishClick = () => {
-        navigate('/register'); // Redirige a la página de registro
-    };
+const UserPage = () => {
 
     return (
         <>
-            <Navbar showButtons={true} />
+            <Navbar showButtons={false} />
             <section>
                 <div className="relative w-full h-[20rem]">
                     <img
@@ -23,10 +17,10 @@ const HomePage = () => {
                     <div className="absolute inset-0 h-full w-full bg-black/50"></div>
                     <div className="relative pt-28 text-center">
                         <h2 className="block antialiased tracking-normal font-sans font-semibold leading-[1.3] text-white mb-4 text-3xl lg:text-4xl">
-                            ¡BIENVENIDO A CHAMBA!
+                            ¡EMPLEOS DISPONIBLES!
                         </h2>
                         <p className="block antialiased font-sans text-xl font-normal leading-relaxed text-white mb-9 opacity-70">
-                            ¿Estás buscando una oportunidad laboral? ¡Has llegado al lugar indicado!
+                            ¿Estás buscando una oportunidad laboral? A continuación te mostramos una lista...
                         </p>
                     </div>
                 </div>
@@ -41,6 +35,5 @@ const HomePage = () => {
     );
 };
 
-export default HomePage;
-
+export default UserPage;
 

@@ -1,18 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import Navbar from '../../components/navbar/Navbar';
-import CardViewJobAp from '../../components/cardsJob/CardViewJobAp';
+import FormPostJob from '../../components/formJob/FormPostJob';
 
-const HomePage = () => {
-    const navigate = useNavigate(); // Hook para redirigir
-
-    const handlePublishClick = () => {
-        navigate('/register'); // Redirige a la página de registro
-    };
+const CompanyPage = () => {
 
     return (
         <>
-            <Navbar showButtons={true} />
+            <Navbar showButtons={false} />
             <section>
                 <div className="relative w-full h-[20rem]">
                     <img
@@ -23,17 +17,17 @@ const HomePage = () => {
                     <div className="absolute inset-0 h-full w-full bg-black/50"></div>
                     <div className="relative pt-28 text-center">
                         <h2 className="block antialiased tracking-normal font-sans font-semibold leading-[1.3] text-white mb-4 text-3xl lg:text-4xl">
-                            ¡BIENVENIDO A CHAMBA!
+                            ¡PUBLICA UN NUEVO TRABAJO DISPONIBLE!
                         </h2>
                         <p className="block antialiased font-sans text-xl font-normal leading-relaxed text-white mb-9 opacity-70">
-                            ¿Estás buscando una oportunidad laboral? ¡Has llegado al lugar indicado!
+                            ¿Estás buscando a nuevas personas? ¡Has llegado al lugar indicado!
                         </p>
                     </div>
                 </div>
 
                 <div className="w-full flex justify-center rounded-xl border border-white bg-white shadow-md shadow-black/5 saturate-200">
                     <div className="my-8 mx-[3rem] w-full max-w-screen-xl">
-                        <CardViewJobAp />
+                        <FormPostJob/>
                     </div>
                 </div>
             </section>
@@ -41,6 +35,4 @@ const HomePage = () => {
     );
 };
 
-export default HomePage;
-
-
+export default CompanyPage;

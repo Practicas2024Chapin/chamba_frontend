@@ -1,8 +1,8 @@
 import React from 'react';
 
-const InputNav = () => {
+const InputNav = ({ showButtons }) => {
     return (
-        <div className="flex justify-center items-center h-full gap-7">
+        <div className={`flex justify-center items-center h-full gap-7 ${!showButtons ? 'hidden' : ''}`}>
             <a href="#">
                 <div className="w-[25rem]">
                     <div className="relative h-10 w-full min-w-[200px] border-gray-400 border-[1px] rounded-full">
@@ -25,7 +25,7 @@ const InputNav = () => {
                             role="textbox"
                             contentEditable={false}
                         >
-                           REGISTRARME COMO EMPRESA
+                            REGISTRARME COMO EMPRESA
                         </div>
                     </div>
                 </div>
@@ -35,6 +35,7 @@ const InputNav = () => {
 };
 
 export default InputNav;
+
 
 
 
