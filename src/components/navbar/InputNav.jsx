@@ -3,7 +3,7 @@ import React from 'react';
 const InputNav = ({ showButtons }) => {
     return (
         <div className={`flex justify-center items-center h-full gap-7 ${!showButtons ? 'hidden' : ''}`}>
-            <a href="#">
+            <a href="/register">
                 <div className="w-[25rem]">
                     <div className="relative h-10 w-full min-w-[200px] border-gray-400 border-[1px] rounded-full">
                         <div
@@ -17,7 +17,7 @@ const InputNav = ({ showButtons }) => {
                 </div>
             </a>
 
-            <a href="#">
+            <a href="/register">
                 <div className="w-[25rem]">
                     <div className="relative h-10 w-full min-w-[200px] border-gray-400 border-[1px] rounded-full">
                         <div
