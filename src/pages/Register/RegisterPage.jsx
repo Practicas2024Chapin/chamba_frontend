@@ -40,7 +40,7 @@ function RegisterPage() {
                 <div className="relative w-full h-[20rem]">
                     <img
                         className="absolute h-full w-full object-cover object-center"
-                        src="https://images.unsplash.com/photo-1593642633279-1796119d5482?ixlib=rb-4.0.3&q=80&w=2072&auto=format&fit=crop"
+                        src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzZ8fG9maWNpbmF8ZW58MHx8MHx8fDA%3D"
                         alt="register background"
                     />
                     <div className="absolute inset-0 h-full w-full bg-black/50"></div>

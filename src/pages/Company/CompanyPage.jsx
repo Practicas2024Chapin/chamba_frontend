@@ -11,7 +11,7 @@ const CompanyPage = () => {
                 <div className="relative w-full h-[20rem]">
                     <img
                         className="absolute h-full w-full object-cover object-center"
-                        src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cmV1bmklQzMlQjNufGVufDB8fDB8fHww"
                         alt="nature"
                     />
                     <div className="absolute inset-0 h-full w-full bg-black/50"></div>
