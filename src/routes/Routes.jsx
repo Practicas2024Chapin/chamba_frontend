@@ -7,6 +7,7 @@ import CompanyPage from "../pages/Company/CompanyPage";
 import LoginPage from "../pages/Login/LoginPage";
 import RegisterPage from "../pages/Register/RegisterPage";
 import InboxPage from "../pages/Inbox/InboxPage";
+import ProfilePage from "../pages/Perfil/MyProfile";
 const routes = createBrowserRouter([
     {
         path: "/",
@@ -31,6 +32,10 @@ const routes = createBrowserRouter([
     {
         path: "/inbox",
         element: <InboxPage />
+    }, 
+    {
+        path:"/profile", 
+        element: <ProfilePage/>
     }
      
 

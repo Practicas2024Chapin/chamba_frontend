@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from '../../components/navbar/Navbar';
-import CardViewJobAp from '../../components/cardsJob/CardViewJobAp';
+import CardViewJobLog from '../../components/cardsJob/CardViewJobLog';
 
 const UserPage = () => {
 
@@ -27,7 +27,7 @@ const UserPage = () => {
 
                 <div className="w-full flex justify-center rounded-xl border border-white bg-white shadow-md shadow-black/5 saturate-200">
                     <div className="my-8 mx-[3rem] w-full max-w-screen-xl">
-                        <CardViewJobAp />
+                        <CardViewJobLog />
                     </div>
                 </div>
             </section>
