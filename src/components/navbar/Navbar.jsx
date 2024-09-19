@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // Importa Link
 import InputNav from './InputNav';
 
 const Navbar = ({ showButtons }) => {
@@ -6,9 +7,9 @@ const Navbar = ({ showButtons }) => {
         <>
             <nav className="bg-white border-b border-gray-300">
                 <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
-                    <a className="flex items-center space-x-3 rtl:space-x-reverse">
+                    <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse"> {/* Usa Link en lugar de a */}
                         <span className="self-center text-3xl font-bold text-black font-sans">CHAMBA</span>
-                    </a>
+                    </Link>
                     <div className="flex items-center space-x-6 rtl:space-x-reverse ml-auto">
                         <input
                             type="text"
@@ -43,6 +44,7 @@ const Navbar = ({ showButtons }) => {
 };
 
 export default Navbar;
+
 
 
 
