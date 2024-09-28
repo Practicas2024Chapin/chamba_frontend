@@ -5,7 +5,7 @@ import CardViewJobAp from '../../components/cardsJob/CardViewJobAp';
 
 const HomePage = () => {
     const navigate = useNavigate();
-    
+
     // Estados para almacenar los datos del formulario
     const [company, setCompany] = useState('');
     const [category, setCategory] = useState('');
@@ -24,11 +24,12 @@ const HomePage = () => {
         });
     };
 
+
     return (
         <>
             <Navbar showButtons={true} />
             <section>
-                <div className="relative w-full h-[20rem]">
+            <div className="relative w-full h-[20rem]">
                     <img
                         className="absolute h-full w-full object-cover object-center"
                         src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTQwfHx3b3JrfGVufDB8fDB8fHww"
@@ -36,11 +37,11 @@ const HomePage = () => {
                     />
                     <div className="absolute inset-0 h-full w-full bg-black/50"></div>
                     <div className="relative pt-28 text-center">
-                        <h2 className="block antialiased tracking-normal font-sans font-semibold leading-[1.3] text-white mb-4 text-3xl lg:text-4xl">
+                        <h2 className="block antialiased tracking-normal font-sans font-semibold text-white mb-4 text-4xl lg:text-5xl">
                             ¡BIENVENIDO A CHAMBA!
                         </h2>
-                        <p className="block antialiased font-sans text-xl font-normal leading-relaxed text-white mb-9 opacity-70">
-                            ¿Estás buscando una oportunidad laboral? ¡Has llegado al lugar indicado!
+                        <p className="block font-sans text-xl text-white mb-9 opacity-80">
+                            Tu futuro laboral comienza aquí.
                         </p>
                     </div>
                 </div>
@@ -113,11 +114,46 @@ const HomePage = () => {
                     </div>
                 </div>
             </section>
+
+            {/* Footer */}
+            <footer className="bg-gray-900 text-white py-8 text-center">
+                <div className="flex justify-center gap-8">
+                    <div className="bg-gray-800 p-6 w-64 h-64 flex flex-col justify-center items-center rounded-lg transition-transform transform hover:scale-105">
+                        <h3 className="text-lg font-semibold">Misión</h3>
+                        <p 
+                            className="text-sm mt-2 text-justify cursor-pointer" // Cambia aquí
+                            onCopy={(e) => e.preventDefault()}
+                        >
+                            Nuestra misión es conectar a empresas y talentos de manera eficiente, 
+                            facilitando el proceso de búsqueda de empleo y la contratación. Nos 
+                            esforzamos por ofrecer una plataforma accesible y confiable que impulse 
+                            el crecimiento profesional y permita a las personas encontrar su lugar 
+                            en el mercado laboral.
+                        </p>
+                    </div>
+                    <div className="bg-gray-800 p-6 w-64 h-64 flex flex-col justify-center items-center rounded-lg transition-transform transform hover:scale-105">
+                        <h3 className="text-lg font-semibold">Visión</h3>
+                        <p 
+                            className="text-sm mt-2 text-justify cursor-pointer" // Cambia aquí
+                            onCopy={(e) => e.preventDefault()}
+                        >
+                            Nuestra visión es ser el puente esencial entre empresas y talentos, 
+                            optimizando el proceso de búsqueda de empleo y contratación. Aspiramos a 
+                            consolidar una plataforma accesible y confiable que fomente el desarrollo 
+                            profesional y ayude a las personas a encontrar su lugar ideal.
+                        </p>
+                    </div>
+                </div>
+                <div className="border-t border-gray-700 pt-4 mt-8">
+                    <p>Copyright © 2024 - Todos los derechos reservados por Chamba</p>
+                </div>
+            </footer>
         </>
     );
 };
 
 export default HomePage;
+
 
 
 

@@ -1,27 +1,37 @@
 import React, { useEffect, useState } from 'react';
-import { getMyPost } from '../../service/PostGetMyPost';
+// import { getMyPost } from '../../service/UrlConfig';
+import { getMyPost } from '../../service/UrlConfig.js';
 import { useNavigate } from 'react-router-dom';
 
+
 function CardViewJobLog() {
-    const [myPost, setMyPost] = useState([]);
+    const [myPost, setJobs] = useState([]);
     const navigate = useNavigate(); // Hook para navegar entre rutas
 
-    useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const data = await getMyPost();
-                setMyPost(data); // Guarda los datos en el estado
-            } catch (error) {
-                console.error('Error fetching posts:', error);
-                setMyPost([]);
-            }
-        };
+    const fetchJobs = async () => {
+        try {
+            const jobsList = await getMyPost();  // Llama a la API
+            console.log(jobsList);               // Muestra los datos en la consola para depurar
+            setJobs(jobsList.data.postYComentario|| []);             // Asegúrate de que jobsList sea un arreglo
+        } catch (error) {
+            console.error('Error fetching jobs:', error);  // Maneja cualquier error que ocurra
+        }
+    };
 
-        fetchPosts();
+    useEffect(() => {
+        fetchJobs(); // Llama a la función cuando el componente se monte
     }, []);
 
-    const handleApplyNow = () => {
-        navigate('')
+    const handleApplyNow = (index) => {
+        // Cambiar el estado del empleo a "Inactivo" al hacer clic
+        setJobs((prevPosts) => {
+            const updatedPosts = [...prevPosts];
+            updatedPosts[index].status = 'Inactivo'; // Actualizar el estado
+            return updatedPosts;
+        });
+        
+        // Navegar a la ruta deseada
+        navigate(''); 
     };
 
     return (
@@ -33,19 +43,21 @@ function CardViewJobLog() {
                             <h2 className="text-xl font-semibold mb-2 text-gray-900">{element.post}</h2>
                             <p className="text-gray-600 mb-2">{element.content}</p>
                             <div className="mb-2">
-                                <span className="text-sm font-medium text-gray-500">Category:</span>
+                                <span className="text-sm font-medium text-gray-500">Categoría:</span>
                                 <p className="text-base text-gray-800">{element.category}</p>
                             </div>
                             <div className="mb-2">
-                                <span className="text-sm font-medium text-gray-500">Location:</span>
+                                <span className="text-sm font-medium text-gray-500">Ubicación:</span>
                                 <p className="text-base text-gray-800">{element.location}</p>
                             </div>
                             <div className="mb-4">
                                 <span className="text-sm font-medium text-gray-500">Estado de empleo:</span>
-                                <p className="text-base font-bold text-green-600">Active</p>
+                                <p className={`text-base font-bold ${element.status === 'Inactivo' ? 'text-red-600' : 'text-green-600'}`}>
+                                    {element.status || 'Activo'}
+                                </p>
                             </div>
                             <button
-                                onClick={handleApplyNow}
+                                onClick={() => handleApplyNow(index)} // Pasar el índice al manejador
                                 className="w-full px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-full hover:bg-blue-700 transition-all"
                             >
                                 Aplicar al empleo

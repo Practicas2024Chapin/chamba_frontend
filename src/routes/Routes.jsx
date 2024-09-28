@@ -36,9 +36,7 @@ const routes = createBrowserRouter([
     {
         path:"/profile", 
         element: <ProfilePage/>
-    }
-     
-
+    },
 ])
 
 function Routes() {

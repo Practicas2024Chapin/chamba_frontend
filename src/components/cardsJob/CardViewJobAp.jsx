@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { getMyPost } from '../../service/PostGetMyPost';
+import { getMyPost } from '../../service/UrlConfig.js';
 import { useNavigate } from 'react-router-dom';
 
 function CardViewJobAp() {
-    const [myPost, setMyPost] = useState([]);
+    const [myPost, setJobs] = useState([]);
     const navigate = useNavigate(); // Hook para navegar entre rutas
 
-    useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                const data = await getMyPost();
-                setMyPost(data); // Guarda los datos en el estado
-            } catch (error) {
-                console.error('Error fetching posts:', error);
-                setMyPost([]);
-            }
-        };
+    const fetchJobs = async () => {
+        try {
+            const jobsList = await getMyPost();  // Llama a la API
+            console.log(jobsList);               // Muestra los datos en la consola para depurar
+            setJobs(jobsList.data.postYComentario|| []);             // Asegúrate de que jobsList sea un arreglo
+        } catch (error) {
+            console.error('Error fetching jobs:', error);  // Maneja cualquier error que ocurra
+        }
+    };
 
-        fetchPosts();
+    useEffect(() => {
+        fetchJobs(); // Llama a la función cuando el componente se monte
     }, []);
 
     const handleApplyNow = () => {
