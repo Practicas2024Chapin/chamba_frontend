@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getMyPost } from '../../service/UrlConfig.js';
+import { getAllPosts } from '../../service/UrlConfig.js';
 import { useNavigate } from 'react-router-dom';
 
 function CardViewJobAp() {
@@ -8,7 +8,7 @@ function CardViewJobAp() {
 
     const fetchJobs = async () => {
         try {
-            const jobsList = await getMyPost();  // Llama a la API
+            const jobsList = await getAllPosts ();  // Llama a la API
             console.log(jobsList);               // Muestra los datos en la consola para depurar
             setJobs(jobsList.data.postYComentario|| []);             // Asegúrate de que jobsList sea un arreglo
         } catch (error) {

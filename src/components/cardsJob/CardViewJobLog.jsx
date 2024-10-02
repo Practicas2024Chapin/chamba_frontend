@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react';
-// import { getMyPost } from '../../service/UrlConfig';
 import { getMyPost } from '../../service/UrlConfig.js';
 import { useNavigate } from 'react-router-dom';
 
-
 function CardViewJobLog() {
     const [myPost, setJobs] = useState([]);
-    const navigate = useNavigate(); // Hook para navegar entre rutas
+    const [error, setError] = useState(null); // Para manejar errores
+    const navigate = useNavigate();
 
     const fetchJobs = async () => {
         try {
-            const jobsList = await getMyPost();  // Llama a la API
-            console.log(jobsList);               // Muestra los datos en la consola para depurar
-            setJobs(jobsList.data.postYComentario|| []);             // Asegúrate de que jobsList sea un arreglo
+            const jobsList = await getMyPost();
+            console.log(jobsList); // Muestra los datos en la consola
+            if (jobsList.error) {
+                throw new Error('Error al obtener los trabajos');
+            }
+            setJobs(jobsList.data.postYComentario || []); // Asegúrate de que jobsList tenga la estructura esperada
         } catch (error) {
-            console.error('Error fetching jobs:', error);  // Maneja cualquier error que ocurra
+            console.error('Error fetching jobs:', error); // Maneja el error
+            setError(error.message); // Almacena el mensaje de error
         }
     };
 
@@ -23,19 +26,17 @@ function CardViewJobLog() {
     }, []);
 
     const handleApplyNow = (index) => {
-        // Cambiar el estado del empleo a "Inactivo" al hacer clic
         setJobs((prevPosts) => {
             const updatedPosts = [...prevPosts];
-            updatedPosts[index].status = 'Inactivo'; // Actualizar el estado
+            updatedPosts[index].status = 'Inactivo'; // Cambiar el estado
             return updatedPosts;
         });
-        
-        // Navegar a la ruta deseada
-        navigate(''); 
+        navigate(''); // Cambia a la ruta deseada
     };
 
     return (
         <div className="p-auto">
+            {error && <p className="text-red-600 text-center">{error}</p>} {/* Mostrar error si existe */}
             {myPost.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-x-[6rem] gap-y-[3rem] mx-[auto]">
                     {myPost.map((element, index) => (
@@ -73,3 +74,4 @@ function CardViewJobLog() {
 }
 
 export default CardViewJobLog;
+

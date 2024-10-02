@@ -35,6 +35,17 @@ export const createPost = async (data) => {
     }
 };
 
+export const getAllPosts = async () => {
+    try{
+        return await apiClient.get("/post/allposts")
+    }catch(e){
+        return{
+            error: true,
+            e,
+        };
+    }
+}
+
 export const getMyPost = async () => {
     try{
         return await apiClient.get("/post/posts");

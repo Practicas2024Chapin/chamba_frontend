@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../../components/navbar/Navbar';
 import FormPostJob from '../../components/formJob/FormPostJob';
-// import { getMyPost } from '../../service/UrlConfig';
 import { getMyPost } from '../../service/UrlConfig.js';
+import { useNavigate } from 'react-router-dom'; // Hook para la navegación
 
 const CompanyPage = () => {
     const [jobs, setJobs] = useState([]);
+    const navigate = useNavigate(); // Para redirigir al usuario
 
     // Función para obtener los trabajos
     const fetchJobs = async () => {
         try {
             const jobsList = await getMyPost();  // Llama a la API
             console.log(jobsList);               // Muestra los datos en la consola para depurar
-            setJobs(jobsList.data.postYComentario|| []);             // Asegúrate de que jobsList sea un arreglo
+            setJobs(jobsList.data.postYComentario || []); // Asegúrate de que jobsList sea un arreglo
         } catch (error) {
             console.error('Error fetching jobs:', error);  // Maneja cualquier error que ocurra
         }
@@ -25,6 +26,12 @@ const CompanyPage = () => {
     // Función para manejar cuando un nuevo trabajo es publicado
     const handleJobPosted = () => {
         fetchJobs(); // Actualiza la lista de trabajos
+    };
+
+    // Función para cerrar sesión
+    const handleLogout = () => {
+        localStorage.removeItem('token');  // Elimina el token del localStorage
+        navigate('/');  // Redirige al usuario a la página de inicio (o cualquier otra ruta)
     };
 
     return (
@@ -46,6 +53,12 @@ const CompanyPage = () => {
                         <p className="block font-sans text-xl text-white mb-9 opacity-80">
                             Encuentra los mejores talentos para tu empresa.
                         </p>
+                        {/* Botón de Cerrar Sesión */}
+                        <button 
+                            onClick={handleLogout} 
+                            className="px-4 py-2 bg-red-600 text-white rounded-full mt-4 hover:bg-red-700 transition-all">
+                            Cerrar sesión
+                        </button>
                     </div>
                 </div>
 

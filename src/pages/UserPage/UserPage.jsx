@@ -1,14 +1,21 @@
 import React from 'react';
 import Navbar from '../../components/navbar/Navbar';
 import CardViewJobLog from '../../components/cardsJob/CardViewJobLog';
+import { useNavigate } from 'react-router-dom'; // Hook para la navegación
 
 const UserPage = () => {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        navigate('/');
+    };
 
     return (
         <>
             <Navbar showButtons={false} />
             <section>
-            <div className="relative w-full h-[20rem]">
+                <div className="relative w-full h-[20rem]">
                     <img
                         className="absolute h-full w-full object-cover object-center"
                         src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzV8fHJldW5pJUMzJUIzbnxlbnwwfDB8MHx8fDA%3D"
@@ -22,6 +29,12 @@ const UserPage = () => {
                         <p className="block font-sans text-xl text-white mb-9 opacity-80">
                             ¿Estás buscando una oportunidad laboral? Aquí tienes una lista de empleos para ti.
                         </p>
+                        {/* Botón de Cerrar Sesión */}
+                        <button 
+                            onClick={handleLogout} 
+                            className="px-4 py-2 bg-red-600 text-white rounded-full mt-4 hover:bg-red-700 transition-all">
+                            Cerrar sesión
+                        </button>
                     </div>
                 </div>
 
@@ -31,6 +44,7 @@ const UserPage = () => {
                     </div>
                 </div>
             </section>
+            
             {/* Footer */}
             <footer className="bg-gray-900 text-white py-4 text-center">
                 <p>Copyright © 2024 - Todos los derechos reservados por Chamba</p>
