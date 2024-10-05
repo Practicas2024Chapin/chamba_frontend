@@ -33,6 +33,12 @@ const Navbar = ({ showButtons }) => {
                                 >
                                     👤 MI PERFIL
                                 </a>
+                                <a
+                                    href="#"
+                                    className="inline-block px-6 py-2 text-sm font-semibold text-black bg-white border border-gray-400 rounded-full hover:bg-gray-100 transition-all"
+                                >
+                                     SOLOCITAR ROL
+                                </a>
                             </>
                         ) : (
                             <Link

@@ -10,7 +10,6 @@ function CardViewJobLog() {
     const fetchJobs = async () => {
         try {
             const jobsList = await getMyPost();
-            console.log(jobsList); // Muestra los datos en la consola
             if (jobsList.error) {
                 throw new Error('Error al obtener los trabajos');
             }
