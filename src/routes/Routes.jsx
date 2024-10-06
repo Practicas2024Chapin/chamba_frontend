@@ -8,6 +8,7 @@ import LoginPage from "../pages/Login/LoginPage";
 import RegisterPage from "../pages/Register/RegisterPage";
 import InboxPage from "../pages/Inbox/InboxPage";
 import ProfilePage from "../pages/Perfil/MyProfile";
+import AdminPage from "../pages/Admin/AdminPage";
 const routes = createBrowserRouter([
     {
         path: "/",
@@ -37,7 +38,12 @@ const routes = createBrowserRouter([
         path:"/profile", 
         element: <ProfilePage/>
     },
+    {
+        path:"/admin",
+        element: <AdminPage/>
+    }
 ])
+
 
 function Routes() {
     return (

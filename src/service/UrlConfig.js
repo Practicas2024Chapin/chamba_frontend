@@ -20,8 +20,39 @@ const apiClient = axios.create({
     }
 );
 
+ export const createRequest = async (data) => {
+    try{
+        return await apiClient.post("/request/requests", data);
+    }catch(e){
+        return {
+            error: true, 
+            e,
+        }
+    }
+ } 
+
+ export const listPendingRequest = async () => {
+    try{
+        return await apiClient.get("/request/listrequest")
+    }catch(e){
+        return{
+            error: true,
+            e,
+        };
+    }
+ }
   
-  
+export const acceptRequest = async (requestId) => {
+    try {
+        return await apiClient.put(`/request/accept/${requestId}`);
+    } catch (e) {
+        return {
+            error: true,
+            e,
+        };
+    }
+};
+
 
 export const createPost = async (data) => {
     try {

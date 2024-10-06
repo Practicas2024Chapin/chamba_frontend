@@ -1,9 +1,20 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom'; // Importa Link y useLocation
+import React, { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import InputNav from './InputNav';
+import { createRequest } from '../../service/UrlConfig.js'; // Asegúrate de importar tu función que envía la solicitud
 
 const Navbar = ({ showButtons }) => {
-    const location = useLocation(); // Obtén la ubicación actual
+    const location = useLocation();
+    const [requestStatus, setRequestStatus] = useState(null); // Estado para manejar el estado de la solicitud
+
+    const handleRequestRole = async () => {
+        const response = await createRequest({});
+        if (response.error) {
+            setRequestStatus("Error al enviar la solicitud.");
+        } else {
+            setRequestStatus("SOLICITUD DE CAMBIO DE ROL ENVIADA, ESPERA.");
+        }
+    };
 
     return (
         <>
@@ -19,7 +30,7 @@ const Navbar = ({ showButtons }) => {
                             className="inline-block px-4 py-2 text-sm font-semibold text-black bg-white border border-gray-400 rounded-full focus:outline-none hover:bg-gray-100 transition-all w-[15rem]"
                         />
                         {/* Renderiza botones solo en /user y /company */}
-                        {(location.pathname === '/user' || location.pathname === '/company') ? (
+                        {location.pathname === '/user' ? (
                             <>
                                 <a
                                     href="/inbox"
@@ -33,11 +44,32 @@ const Navbar = ({ showButtons }) => {
                                 >
                                     👤 MI PERFIL
                                 </a>
+                                {requestStatus ? (
+                                    <span className="text-sm font-semibold text-green-600">
+                                        {requestStatus}
+                                    </span>
+                                ) : (
+                                    <button
+                                        onClick={handleRequestRole}
+                                        className="inline-block px-6 py-2 text-sm font-semibold text-black bg-white border border-gray-400 rounded-full hover:bg-gray-100 transition-all"
+                                    >
+                                        SOLICITAR ROL
+                                    </button>
+                                )}
+                            </>
+                        ) : location.pathname === '/company' ? (
+                            <>
                                 <a
-                                    href="#"
+                                    href="/inbox"
                                     className="inline-block px-6 py-2 text-sm font-semibold text-black bg-white border border-gray-400 rounded-full hover:bg-gray-100 transition-all"
                                 >
-                                     SOLOCITAR ROL
+                                    📧 INBOX
+                                </a>
+                                <a
+                                    href="/profile"
+                                    className="inline-block px-6 py-2 text-sm font-semibold text-black bg-white border border-gray-400 rounded-full hover:bg-gray-100 transition-all"
+                                >
+                                    👤 MI PERFIL
                                 </a>
                             </>
                         ) : (
@@ -64,6 +96,8 @@ const Navbar = ({ showButtons }) => {
 };
 
 export default Navbar;
+
+
 
 
 

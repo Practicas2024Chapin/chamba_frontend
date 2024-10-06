@@ -15,15 +15,17 @@ function LoginPage() {
                 email,
                 password,
             });
-
+    
             const token = response.data.userDetails.token;
             const role = response.data.userDetails.role;
             console.log('Inicio de sesión exitoso:', response.data);
-
+    
             localStorage.setItem('token', token);
-
+    
             // Redirigir según el tipo de usuario
-            if (role === 'COMPANY_ROLE') {
+            if (role === 'ADMIN_GENERAL') {
+                navigate('/admin');
+            } else if (role === 'COMPANY_ROLE') {
                 navigate('/company');
             } else {
                 navigate('/user');
@@ -37,6 +39,7 @@ function LoginPage() {
             }
         }
     };
+    
 
     return (
         <>
