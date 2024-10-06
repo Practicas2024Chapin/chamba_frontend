@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'; // Hook para la navegación
 const AdminPage = () => {
     const [requests, setRequests] = useState([]); // Estado para almacenar las solicitudes
     const [error, setError] = useState(null); // Para manejar errores
+    const [requestId, setRequestId] = useState(true); // Para almacenar el id de la solicitud
     const navigate = useNavigate(); // Para redirigir al usuario
 
     // Función para obtener las solicitudes
@@ -29,17 +30,20 @@ const AdminPage = () => {
         navigate('/'); // Redirigir a la página de inicio
     };
 
+    const handleRequest=(event)=>{
+        event.preventDefault();
+        handleAcceptRequest(event.target.id)
+    }
+
     // Función para aceptar una solicitud
     const handleAcceptRequest = async (requestId) => {
         try {
+            setRequestId(false); // Almacena el id de la solicitud
             const response = await acceptRequest(requestId); // Llamada a la API para aceptar la solicitud
-            if (response.success) {
+            if (response.data.success) {
                 // Actualiza el estado de la solicitud aceptada
-                setRequests((prevRequests) =>
-                    prevRequests.map((request) =>
-                        request._id === requestId ? { ...request, status: 'ACCEPTED' } : request
-                    )
-                );
+                fetchRequests();
+                setRequestId(true); // Restablece el id de la solicitud
             }
         } catch (error) {
             console.error('Error accepting request:', error); // Manejo de errores
@@ -92,13 +96,21 @@ const AdminPage = () => {
                                         </p>
                                         <p className="text-gray-500 mb-4">
                                             Estado: 
-                                            <span className={`font-bold ${request.status === 'ACCEPTED' ? 'text-green-600' : 'text-yellow-600'}`}>
-                                                {request.status}
-                                            </span>
+                                            {
+                                                requestId ? (
+                                                    request.status == 'PENDING' ? (
+                                                        <span className="font-bold text-yellow-600">Pendiente</span>
+                                                    ) :
+                                                        <span className="font-bold text-green-600">Aceptada</span>
+                                                ) : (
+                                                    <span className="font-bold text-green-600">...</span>
+                                                )
+                                            }
                                         </p>
                                         <div className="flex justify-between mt-4">
                                             <button 
-                                                onClick={() => handleAcceptRequest(request._id)}
+                                                id={request._id}
+                                                onClick={handleRequest}
                                                 className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-all">
                                                 Aceptar
                                             </button>
