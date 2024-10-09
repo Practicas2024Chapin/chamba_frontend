@@ -41,6 +41,28 @@ const apiClient = axios.create({
         };
     }
  }
+
+ export const applyToJob = async (idPost) => {
+    try {
+        return await apiClient.post(`/application/apply/${idPost}`);
+    } catch (e) {
+        return {
+            error: true,
+            e,
+        };
+    }
+};
+
+export const getUserApplications = async () => {
+    try{
+        return await apiClient.get("/application/applications")
+    }catch(e){
+        return{
+            error: true,
+            e,
+        };
+    }
+ }
   
 export const acceptRequest = async (requestId) => {
     try {
@@ -80,6 +102,17 @@ export const getAllPosts = async () => {
 export const getMyPost = async () => {
     try{
         return await apiClient.get("/post/posts");
+    }catch(e){
+        return{
+            error: true,
+            e,
+        };
+    }
+}
+
+export const getInfoUserLogged = async () => {
+    try{
+        return await apiClient.get("/auth/me");
     }catch(e){
         return{
             error: true,

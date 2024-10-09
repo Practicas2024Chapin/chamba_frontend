@@ -1,41 +1,74 @@
 import React, { useEffect, useState } from 'react';
-import { getMyPost } from '../../service/UrlConfig.js';
+import { getMyPost, applyToJob } from '../../service/UrlConfig.js';
 import { useNavigate } from 'react-router-dom';
 
 function CardViewJobLog() {
     const [myPost, setJobs] = useState([]);
-    const [error, setError] = useState(null); // Para manejar errores
+    const [error, setError] = useState(null);
+    const [successMessage, setSuccessMessage] = useState(null); // Para manejar el mensaje de éxito
     const navigate = useNavigate();
 
     const fetchJobs = async () => {
         try {
             const jobsList = await getMyPost();
+            console.log(jobsList);
             if (jobsList.error) {
                 throw new Error('Error al obtener los trabajos');
             }
-            setJobs(jobsList.data.postYComentario || []); // Asegúrate de que jobsList tenga la estructura esperada
+            setJobs(jobsList.data.postYComentario || []);
         } catch (error) {
-            console.error('Error fetching jobs:', error); // Maneja el error
-            setError(error.message); // Almacena el mensaje de error
+            console.error('Error fetching jobs:', error);
+            setError(error.message);
         }
     };
 
     useEffect(() => {
-        fetchJobs(); // Llama a la función cuando el componente se monte
+        fetchJobs();
     }, []);
 
-    const handleApplyNow = (index) => {
-        setJobs((prevPosts) => {
-            const updatedPosts = [...prevPosts];
-            updatedPosts[index].status = 'Inactivo'; // Cambiar el estado
-            return updatedPosts;
-        });
-        navigate(''); // Cambia a la ruta deseada
+    const handleApplyNow = async (index, idPost) => {
+        if (!idPost) {
+            console.error('idPost is undefined');
+            setError('ID de trabajo no válido.');
+            return;
+        }
+
+        console.log('Applying to job with idPost:', idPost);
+        try {
+            const response = await applyToJob(idPost);
+
+            if (response.error) {
+                setError('Error al aplicar al trabajo.');
+                console.error(response.error.message);
+                return;
+            }
+
+            if (response.success) {
+                setJobs((prevPosts) => {
+                    const updatedPosts = [...prevPosts];
+                    updatedPosts[index].status = 'Inactivo'; // Cambia el estado del trabajo
+                    return updatedPosts;
+                });
+                setSuccessMessage('Se ha aplicado correctamente al empleo.'); // Mensaje de éxito
+                // Desaparecer el mensaje después de 3 segundos
+                setTimeout(() => setSuccessMessage(null), 3000);
+            } else {
+                setError(response.message);
+            }
+        } catch (error) {
+            setError('Error inesperado al aplicar al trabajo.');
+            console.error('Error applying to job:', error);
+        }
     };
 
     return (
         <div className="p-auto">
             {error && <p className="text-red-600 text-center">{error}</p>} {/* Mostrar error si existe */}
+            {successMessage && (
+                <div className="bg-green-200 text-green-800 p-4 rounded-lg shadow-lg mb-4">
+                    {successMessage}
+                </div>
+            )} {/* Mostrar mensaje de éxito */}
             {myPost.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-x-[6rem] gap-y-[3rem] mx-[auto]">
                     {myPost.map((element, index) => (
@@ -57,7 +90,7 @@ function CardViewJobLog() {
                                 </p>
                             </div>
                             <button
-                                onClick={() => handleApplyNow(index)} // Pasar el índice al manejador
+                                onClick={() => handleApplyNow(index, element._id)}
                                 className="w-full px-4 py-2 text-sm font-medium text-white bg-gray-800 rounded-full hover:bg-blue-700 transition-all"
                             >
                                 Aplicar al empleo
@@ -73,4 +106,11 @@ function CardViewJobLog() {
 }
 
 export default CardViewJobLog;
+
+
+
+
+
+
+
 
