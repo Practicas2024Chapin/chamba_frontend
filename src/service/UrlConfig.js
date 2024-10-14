@@ -99,9 +99,20 @@ export const getAllPosts = async () => {
     }
 }
 
-export const getMyPost = async () => {
+export const getMyPostUser = async () => {
     try{
         return await apiClient.get("/post/posts");
+    }catch(e){
+        return{
+            error: true,
+            e,
+        };
+    }
+}
+
+export const getMyPostCompany = async () => {
+    try{
+        return await apiClient.get("/post/postsCompany");
     }catch(e){
         return{
             error: true,
@@ -120,3 +131,36 @@ export const getInfoUserLogged = async () => {
         };
     }
 }
+
+export const startConversation = async (recipientId, content) => {
+    try {
+        return await apiClient.post(`/messages/conversation`, { recipientId, content });
+    } catch (e) {
+        return {
+            error: true,
+            e,
+        };
+    }
+};
+
+export const getConversations = async () => {
+    try {
+        return await apiClient.get(`/messages/conversations`);
+    } catch (e) {
+        return {
+            error: true,
+            e,
+        };
+    }
+};
+
+export const getMessages = async (conversationId) => {
+    try {
+        return await apiClient.get(`/messages/${conversationId}`);
+    } catch (e) {
+        return {
+            error: true,
+            e,
+        };
+    }
+};

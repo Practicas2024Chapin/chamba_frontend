@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 // import { createPost } from '../../service/UrlConfig'; // Asegúrate de que la ruta sea correcta
-import { createPost } from "../../service/UrlConfig.js"
+import { createPost } from "../../service/UrlConfig.js";
+import { toast } from 'react-hot-toast';
 
 const PostForm = ({ onJobPosted }) => { // Añadimos la prop onJobPosted
     const [company, setCompany] = useState('');
@@ -12,40 +13,46 @@ const PostForm = ({ onJobPosted }) => { // Añadimos la prop onJobPosted
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         // Validar que todos los campos estén llenos
         if (!company || !content || !category || !location) {
-            alert('Por favor, completa todos los campos.'); // Mensaje de alerta si hay campos vacíos
-            return;
+            return toast.error('Por favor, completa todos los campos.');
         }
-
-        const postData = {
-            company,
-            content,
-            category,
-            location
-        };
-
-        const newPost = await createPost(postData);
-        if (newPost) {
-            setSuccessMessage('Tu publicación se ha creado con éxito.'); // Mensaje de éxito
-            // Limpiar los campos después de crear el post
+    
+        try {
+            const postData = {
+                company,
+                content,
+                category,
+                location
+            };
+    
+            // Crear la publicación
+            const newPost = await createPost(postData);
+    
+            // Verificar si hay un error en la respuesta
+            if (newPost.error) {
+                return toast.error('Error al realizar la publicación. Inténtalo de nuevo.');
+            }
+    
+            // Si la publicación fue exitosa
+            toast.success('Tu publicación se ha realizado con éxito.');
+            
+            // Limpiar los campos del formulario
             setCompany('');
             setContent('');
             setCategory('');
             setLocation('');
-
+    
             // Llama a la función para actualizar la lista de trabajos
             if (onJobPosted) {
                 onJobPosted(); // Llamada a la prop que refresca la lista de trabajos
             }
-
-            // Restablecer el mensaje de éxito después de unos segundos
-            setTimeout(() => {
-                setSuccessMessage(''); // Restablecer el mensaje a vacío
-            }, 5000);
+        } catch (error) {
+            toast.error('Hubo un error al intentar realizar la publicación.');
         }
     };
+    
 
     return (
         <>

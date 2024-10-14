@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { getMyPost, applyToJob } from '../../service/UrlConfig.js';
+import { getMyPostUser, applyToJob } from '../../service/UrlConfig.js';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast'; // Importamos toast
 
 function CardViewJobLog() {
     const [myPost, setJobs] = useState([]);
     const [error, setError] = useState(null);
-    const [successMessage, setSuccessMessage] = useState(null); // Para manejar el mensaje de éxito
     const navigate = useNavigate();
 
     const fetchJobs = async () => {
         try {
-            const jobsList = await getMyPost();
+            const jobsList = await getMyPostUser();
             console.log(jobsList);
             if (jobsList.error) {
                 throw new Error('Error al obtener los trabajos');
@@ -18,7 +18,7 @@ function CardViewJobLog() {
             setJobs(jobsList.data.postYComentario || []);
         } catch (error) {
             console.error('Error fetching jobs:', error);
-            setError(error.message);
+            toast.error('Error al obtener los trabajos.'); // Muestra el mensaje de error con toast
         }
     };
 
@@ -29,46 +29,25 @@ function CardViewJobLog() {
     const handleApplyNow = async (index, idPost) => {
         if (!idPost) {
             console.error('idPost is undefined');
-            setError('ID de trabajo no válido.');
+            toast.error('ID de trabajo no válido.'); // Muestra el mensaje de error con toast
             return;
         }
-
-        console.log('Applying to job with idPost:', idPost);
         try {
             const response = await applyToJob(idPost);
 
             if (response.error) {
-                setError('Error al aplicar al trabajo.');
-                console.error(response.error.message);
-                return;
-            }
-
-            if (response.success) {
-                setJobs((prevPosts) => {
-                    const updatedPosts = [...prevPosts];
-                    updatedPosts[index].status = 'Inactivo'; // Cambia el estado del trabajo
-                    return updatedPosts;
-                });
-                setSuccessMessage('Se ha aplicado correctamente al empleo.'); // Mensaje de éxito
-                // Desaparecer el mensaje después de 3 segundos
-                setTimeout(() => setSuccessMessage(null), 3000);
+                toast.error('Error al aplicar al trabajo.'); // Muestra el mensaje de error con toast
             } else {
-                setError(response.message);
+                toast.success('Se ha aplicado correctamente al empleo.');
             }
         } catch (error) {
-            setError('Error inesperado al aplicar al trabajo.');
-            console.error('Error applying to job:', error);
+            toast.error('Error al aplicar al trabajo.'); // Muestra el mensaje de error en caso de excepción
+
         }
     };
 
     return (
         <div className="p-auto">
-            {error && <p className="text-red-600 text-center">{error}</p>} {/* Mostrar error si existe */}
-            {successMessage && (
-                <div className="bg-green-200 text-green-800 p-4 rounded-lg shadow-lg mb-4">
-                    {successMessage}
-                </div>
-            )} {/* Mostrar mensaje de éxito */}
             {myPost.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-x-[6rem] gap-y-[3rem] mx-[auto]">
                     {myPost.map((element, index) => (
@@ -106,6 +85,7 @@ function CardViewJobLog() {
 }
 
 export default CardViewJobLog;
+
 
 
 
