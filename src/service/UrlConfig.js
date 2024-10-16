@@ -8,7 +8,6 @@ const apiClient = axios.create({
   apiClient.interceptors.request.use(
     (config) => {
       const getToken = localStorage.getItem("token");
-      console.log("Token obtenido:", getToken); // Para verificar el token
       if (getToken) {
         
         config.headers.Authorization = `${getToken}`;
@@ -120,6 +119,18 @@ export const getMyPostCompany = async () => {
         };
     }
 }
+
+export const searchPostsByAlphabet = async (letter) => {    
+    try {        
+        return await apiClient.get(`/post/posts/alphabet?letter=${letter}`);    
+    } catch (e) {        
+        return {            
+            error: true,            
+            e,        
+        };    
+    }
+};
+
 
 export const getInfoUserLogged = async () => {
     try{

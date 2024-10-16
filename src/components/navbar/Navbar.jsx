@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import InputNav from './InputNav';
 import { createRequest } from '../../service/UrlConfig.js'; // Asegúrate de importar tu función que envía la solicitud
 import { toast } from 'react-hot-toast'; // Importa toast de react-hot-toast
 
 const Navbar = ({ showButtons, userRole }) => {
     const location = useLocation();
+    const navigate = useNavigate(); // Usamos useNavigate para redirigir
     const [isOpen, setIsOpen] = useState(false); // Estado para el menú móvil
 
     const handleRequestRole = async () => {
@@ -22,9 +23,11 @@ const Navbar = ({ showButtons, userRole }) => {
     };
 
     const handleCompanyClick = (e) => {
-        if (userRole !== 'COMPANY_ROLE') {
+        if ( role !== 'COMPANY_ROLE') {
             e.preventDefault(); // Evitar redirección
             toast.error('Debes solicitar el rol de COMPAÑIA antes de acceder.');
+        } else {
+            navigate('/company');
         }
     };
 
@@ -147,6 +150,7 @@ const Navbar = ({ showButtons, userRole }) => {
 };
 
 export default Navbar;
+
 
 
 
