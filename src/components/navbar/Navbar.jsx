@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import InputNav from './InputNav';
 import { createRequest } from '../../service/UrlConfig.js'; // Asegúrate de importar tu función que envía la solicitud
@@ -8,27 +8,41 @@ const Navbar = ({ showButtons, userRole }) => {
     const location = useLocation();
     const navigate = useNavigate(); // Usamos useNavigate para redirigir
     const [isOpen, setIsOpen] = useState(false); // Estado para el menú móvil
+    const [role, setRole] = useState(null);
+
+    useEffect(() => {
+        const role = localStorage.getItem('rol');
+        setRole(role);
+    }, []);
 
     const handleRequestRole = async () => {
         try {
             const response = await createRequest({});
             if (response.error) {
-                toast.error("La solicitud ya ha sido enviada.");
+                toast.error("La solicitud ya ha sido enviada.", { id: "clipboard" });
             } else {
-                toast.success("Solicitud enviada, espera.");
+                toast.success("Solicitud enviada, espera.", { id: "clipboard" });
             }
         } catch (error) {
-            toast.error("La solicitud ya ha sido enviada.");
+            toast.error("La solicitud ya ha sido enviada.", { id: "clipboard" });
         }
     };
 
     const handleCompanyClick = (e) => {
-        if ( role !== 'COMPANY_ROLE') {
-            e.preventDefault(); // Evitar redirección
-            toast.error('Debes solicitar el rol de COMPAÑIA antes de acceder.');
+        if (role !== 'COMPANY_ROLE') {
+            e.preventDefault();
+            toast.error('Debes solicitar el rol de COMPAÑIA antes de acceder.', { id: "clipboard" });
         } else {
             navigate('/company');
         }
+    };
+
+    const handleInboxClick = () => {
+        toast.success("Estamos trabajando para que tengas una mejor experiencia.", {
+            id: "inboxToast",
+            duration: 10000,
+            icon: '🛠️',
+        });
     };
 
     return (
@@ -77,8 +91,9 @@ const Navbar = ({ showButtons, userRole }) => {
                             ) : location.pathname === '/user' ? (
                                 <>
                                     <a
-                                        href="/inbox"
+                                        href="#"
                                         className="inline-block px-6 py-2 text-sm font-semibold text-black bg-white border border-gray-400 rounded-full hover:bg-gray-100 transition-all"
+                                        onClick={handleInboxClick} // Muestra toast al hacer clic en INBOX
                                     >
                                         📧 INBOX
                                     </a>
@@ -96,19 +111,22 @@ const Navbar = ({ showButtons, userRole }) => {
                                         🏢 COMPAÑIA
                                     </a>
 
+                                    {/* Botón de solicitar rol solo si el rol es USER_ROLE */}
+                                    {role === 'USER_ROLE' && (
                                         <button
                                             onClick={handleRequestRole}
                                             className="inline-block px-6 py-2 text-sm font-semibold text-black bg-white border border-gray-400 rounded-full hover:bg-gray-100 transition-all"
                                         >
                                             SOLICITAR ROL
                                         </button>
-                                    
+                                    )}
                                 </>
                             ) : location.pathname === '/company' ? (
                                 <>
                                     <a
-                                        href="/inbox"
+                                        href="#"
                                         className="inline-block px-6 py-2 text-sm font-semibold text-black bg-white border border-gray-400 rounded-full hover:bg-gray-100 transition-all"
+                                        onClick={handleInboxClick} // Muestra toast al hacer clic en INBOX
                                     >
                                         📧 INBOX
                                     </a>
@@ -150,6 +168,8 @@ const Navbar = ({ showButtons, userRole }) => {
 };
 
 export default Navbar;
+
+
 
 
 

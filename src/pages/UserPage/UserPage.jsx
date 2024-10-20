@@ -32,7 +32,7 @@ const UserPage = () => {
                         {/* Botón de Cerrar Sesión */}
                         <button 
                             onClick={handleLogout} 
-                            className="px-4 py-2 bg-red-600 text-white rounded-full mt-4 hover:bg-red-700 transition-all">
+                            className="px-4 py-2 bg-gray-800 text-white rounded-full mt-4 hover:bg-blue-700 transition-all text-sm font-medium">
                             Cerrar sesión
                         </button>
                     </div>

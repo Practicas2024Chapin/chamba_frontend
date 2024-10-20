@@ -21,12 +21,13 @@ function LoginPage() {
             console.log('Inicio de sesión exitoso:', response.data);
     
             localStorage.setItem('token', token);
+            localStorage.setItem('rol', role);
     
             // Redirigir según el tipo de usuario
             if (role === 'ADMIN_GENERAL') {
                 navigate('/admin');
             } else if (role === 'COMPANY_ROLE') {
-                navigate('/company');
+                navigate('/user');
             } else {
                 navigate('/user');
             }

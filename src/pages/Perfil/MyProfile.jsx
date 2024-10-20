@@ -106,23 +106,28 @@ const MyProfile = () => {
                         <h3 className="text-2xl font-semibold mb-6 text-center">Trabajos a los que he aplicado</h3>
                         {applications.length > 0 ? (
                             applications.map((application) => (
-                                <div key={application._id} className="mb-6 p-6 border-b border-gray-300 rounded-md shadow-sm hover:shadow-lg transition-shadow duration-200">
-                                    <h4 className="text-2xl font-semibold text-gray-800 mb-2 flex items-center"> {application.idPost.title}
-                                    </h4>
-                                    <p className="text-gray-700 mb-1">
-                                        <span className="font-medium text-indigo-500">🏢 Compañía:</span> {application.idPost.company}
-                                    </p>
-                                    <p className="text-gray-700 mb-1">
-                                        <span className="font-medium text-indigo-500">🗂️ Categoría:</span> {application.idPost.category}
-                                    </p>
-                                    <p className="text-gray-700">
-                                        <span className="font-medium text-indigo-500">📅 Fecha de Aplicación:</span> {new Date(application.appliedAt).toLocaleDateString()}
-                                    </p>
-                                </div>
+                                application.idPost && ( // Solo renderiza las aplicaciones que tienen idPost
+                                    <div key={application._id} className="mb-6 p-6 border-b border-gray-300 rounded-md shadow-sm hover:shadow-lg transition-shadow duration-200">
+                                        <h4 className="text-2xl font-semibold text-gray-800 mb-2 flex items-center">
+                                            {application.idPost.title}
+                                        </h4>
+                                        <p className="text-gray-700 mb-1">
+                                            <span className="font-medium text-indigo-500">🏢 Compañía:</span> {application.idPost.company}
+                                        </p>
+                                        <p className="text-gray-700 mb-1">
+                                            <span className="font-medium text-indigo-500">🗂️ Categoría:</span> {application.idPost.category}
+                                        </p>
+                                        <p className="text-gray-700">
+                                            <span className="font-medium text-indigo-500">📅 Fecha de Aplicación:</span> {new Date(application.appliedAt).toLocaleDateString()}
+                                        </p>
+                                    </div>
+                                )
                             ))
                         ) : (
                             <p className="text-center text-gray-500 text-lg">No has aplicado a ningún trabajo aún.</p>
                         )}
+
+
                     </div>
                 </div>
 

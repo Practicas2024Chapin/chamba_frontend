@@ -9,6 +9,8 @@ import RegisterPage from "../pages/Register/RegisterPage";
 import InboxPage from "../pages/Inbox/InboxPage";
 import ProfilePage from "../pages/Perfil/MyProfile";
 import AdminPage from "../pages/Admin/AdminPage";
+import ConversationPage from "../pages/Conversation/ConversationPage"; // Importa la nueva página
+
 const routes = createBrowserRouter([
     {
         path: "/",
@@ -35,22 +37,24 @@ const routes = createBrowserRouter([
         element: <InboxPage />
     }, 
     {
-        path:"/profile", 
-        element: <ProfilePage/>
+        path: "/profile", 
+        element: <ProfilePage />
     },
     {
-        path:"/admin",
-        element: <AdminPage/>
+        path: "/admin",
+        element: <AdminPage />
+    },
+    {
+        path: "/conversation/:conversationId", // Añade la ruta de la conversación
+        element: <ConversationPage /> // Asocia la ruta con el componente ConversationPage
     }
-])
-
+]);
 
 function Routes() {
     return (
         //Establecer la ruta para rutas
         <RouterProvider router={routes} />
-    )
-
+    );
 }
 
 export default Routes;

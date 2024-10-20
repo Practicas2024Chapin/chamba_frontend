@@ -41,6 +41,17 @@ const apiClient = axios.create({
     }
  }
 
+ export const getApplicantsForJob = async (idPost) => {
+    try {
+        return await apiClient.get(`/application/post/${idPost}/applicants`);
+    } catch (e) {
+        return {
+            error: true,
+            e,
+        };
+    }
+};
+
  export const applyToJob = async (idPost) => {
     try {
         return await apiClient.post(`/application/apply/${idPost}`);
@@ -144,34 +155,21 @@ export const getInfoUserLogged = async () => {
 }
 
 export const startConversation = async (recipientId, content) => {
-    try {
-        return await apiClient.post(`/messages/conversation`, { recipientId, content });
-    } catch (e) {
-        return {
-            error: true,
-            e,
-        };
-    }
+    const response = await apiClient.post('/message/conversations', {
+        recipientId,
+        content,
+    });
+    return response.data;
 };
 
+// Obtener todas las conversaciones del usuario autenticado
 export const getConversations = async () => {
-    try {
-        return await apiClient.get(`/messages/conversations`);
-    } catch (e) {
-        return {
-            error: true,
-            e,
-        };
-    }
+    const response = await apiClient.get('/message/conversations');
+    return response.data;
 };
 
+// Obtener mensajes de una conversación específica
 export const getMessages = async (conversationId) => {
-    try {
-        return await apiClient.get(`/messages/${conversationId}`);
-    } catch (e) {
-        return {
-            error: true,
-            e,
-        };
-    }
+    const response = await apiClient.get(`/message/conversations/${conversationId}/messages`);
+    return response.data;
 };
