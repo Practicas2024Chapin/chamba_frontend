@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-    baseURL: "http://127.0.0.1:3000/practica/v1",
+    baseURL: "https://chamba-backend-s4bg-h50gjukbp-mvalladares-2019607s-projects.vercel.app/practica/v1",
     timeout: 5000,
   });
   

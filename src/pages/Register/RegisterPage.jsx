@@ -12,7 +12,7 @@ function RegisterPage() {
     const handleRegister = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://127.0.0.1:3000/practica/v1/auth/register', {
+            const response = await axios.post('https://chamba-backend-s4bg-h50gjukbp-mvalladares-2019607s-projects.vercel.app/practica/v1/auth/register', {
                 username,
                 email,
                 password,
