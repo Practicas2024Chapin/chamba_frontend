@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import {login} from '../../service/UrlConfig.js';
 
 function LoginPage() {
     const [email, setEmail] = useState('');
@@ -11,10 +12,7 @@ function LoginPage() {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('https://chamba-backend-s4bg-h50gjukbp-mvalladares-2019607s-projects.vercel.app/practica/v1/auth/login', {
-                email,
-                password,
-            });
+            const response = await login({ email, password });
     
             const token = response.data.userDetails.token;
             const role = response.data.userDetails.role;
